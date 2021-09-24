@@ -1,0 +1,5 @@
+
+function test {
+    triggered: update.message - any
+    handling: send message
+}
