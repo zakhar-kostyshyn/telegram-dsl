@@ -1,5 +1,7 @@
 
 function test {
-    triggered: update.message - any
-    handling: send message
+    triggeredBy: update.message - any;
+    action: send(update.message.text);
 }
+
+
