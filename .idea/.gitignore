@@ -6,5 +6,9 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
-.idea/
-notes/
+
+.gradle/**
+.idea/**
+build/**
+gradle/**
+notes/**
