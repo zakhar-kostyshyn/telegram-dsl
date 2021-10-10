@@ -3,5 +3,3 @@ function test {
     triggeredBy: update.message - any;
     action: send(update.message.text);
 }
-
-

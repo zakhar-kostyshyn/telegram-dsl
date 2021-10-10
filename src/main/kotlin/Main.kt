@@ -23,6 +23,7 @@ val sendService by KoinJavaComponent.inject<SendService>(SendService::class.java
 
 fun main() {
 
+    // ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha (welcome to the club body)
     val resolver = ResolverServiceImpl(
         messageEventHandler = MessageEventHandler(
             codeService = CodeService(

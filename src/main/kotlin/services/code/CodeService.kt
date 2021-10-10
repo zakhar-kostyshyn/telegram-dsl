@@ -14,14 +14,8 @@ class CodeService(
     }
 
     fun getDslCode(): DslCode {
-        return DslCode(
-            """
-                    function test {
-                        triggeredBy: update.message - any;
-                        action: send(update.message.text);
-                    }
-                """
-        )
+        val code = this.javaClass::class.java.getResource("/dsl_code.txt").readText()
+        return DslCode(code)
     }
 
 }

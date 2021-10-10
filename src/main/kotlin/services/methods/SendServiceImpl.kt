@@ -1,6 +1,6 @@
 package services.methods
 
-import config.client
+import client
 import models.TelegramMethod
 import models.MethodWrapper
 import io.ktor.client.*
@@ -19,7 +19,7 @@ class SendServiceImpl : SendService {
     private val client: HttpClient = client()
 
     override fun sendMessage(methodWrapper: MethodWrapper<out TelegramMethod>) = runBlocking {
-        client.post("https://api.telegram.org/bot$token/${methodWrapper.methodType}") {
+        client.post("https://api.telegram.org/bot$token/${methodWrapper.methodType.methodType}") {
             contentType(ContentType.Application.Json)
             body = methodWrapper.telegramMethodModel
         } as HttpResponse
