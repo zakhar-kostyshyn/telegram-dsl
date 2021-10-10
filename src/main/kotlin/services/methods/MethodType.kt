@@ -1,5 +1,6 @@
 package services.methods
 
 enum class MethodType(val methodType: String) {
-    SetWebhook("setWebhook")
+    SetWebhook("setWebhook"),
+    SendMessage("sendMessage")
 }

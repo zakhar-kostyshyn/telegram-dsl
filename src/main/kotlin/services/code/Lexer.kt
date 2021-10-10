@@ -52,11 +52,6 @@ class BasicLexer : Lexer {
         return createListOfTokens(filteredInputCode)
     }
 
-    // - test
-    // test test
-    // - -
-    // test -
-
     fun filterInputCode(code: String) = code.also { println("Start filtering code: '$it'") }
         .trim().also { println("\tCode after trim: '$it'") }
         .replace("\\n".toRegex(), "").also { println("\tCode after new line replace: '$it'") }

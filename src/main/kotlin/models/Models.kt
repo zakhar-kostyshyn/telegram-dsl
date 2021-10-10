@@ -2612,7 +2612,7 @@ data class GameHighScore(
 
 data class MethodWrapper<T>(
     val methodType: MethodType,
-    val telegramRequest: T
+    val telegramMethodModel: T
 )
 
 sealed class TelegramMethod {
@@ -2693,7 +2693,22 @@ sealed class TelegramMethod {
         val reply_to_message_id: Long? = null,
         val allow_sending_without_reply: Boolean? = null,
         val reply_markup: KeyboardOption? = null,
-    ) : TelegramMethod()
+    ) : TelegramMethod() {
+        constructor(
+            chat_id: String,
+            text: String
+        ) : this(
+            chat_id = chat_id,
+            text = text,
+            parse_mode = null,
+            entities = null,
+            disable_web_page_preview = null,
+            disable_notification = null,
+            reply_to_message_id = null,
+            allow_sending_without_reply = null,
+            reply_markup = null,
+        )
+    }
 
     /**
      * <p>Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent <a href="#message">Message</a> is returned.</p>

@@ -8,8 +8,8 @@ data class SemanticModel(val semanticFunctions: List<SemanticFunction> = emptyLi
 
 data class SemanticFunction(val name: SemanticFunctionName, val semanticFunctionProperties: List<SemanticFunctionProperty> = emptyList())
 data class SemanticFunctionName(val name: String)
+
 sealed class SemanticFunctionProperty
-// TODO replace triggerModel type from Any to more essential (String|TelegramModel)
 data class SemanticFunctionTrigger(val triggerModel: KClass<out TelegramModel>, val modelCondition: SemanticFunctionTriggerModelCondition) : SemanticFunctionProperty()
 data class SemanticFunctionAction(val methods: List<SemanticMethod>) : SemanticFunctionProperty()
 
@@ -24,5 +24,3 @@ data class SemanticFunctionTriggerModelCondition(val conditionType: ConditionTyp
 }
 data class SemanticMethod(val method: KClass<out TelegramMethod>, val arguments: List<SemanticMethodArgument>)
 data class SemanticMethodArgument(val argument: String)
-
-// TODO chatID should be initialized after semantic model building
