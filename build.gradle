@@ -9,10 +9,12 @@ ext {
     ktor_version = '1.6.3'
     logback_version = '1.2.6'
     koin_version = '3.1.2'
+    logback_version = '1.2.6'
 }
 
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -20,17 +22,29 @@ dependencies {
     implementation "io.ktor:ktor-client-cio:$ktor_version"
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
     implementation "io.ktor:ktor-client-gson:$ktor_version"
+    implementation 'junit:junit:4.13.1'
 
     compile "io.insert-koin:koin-core:$koin_version"
-    testCompile "io.insert-koin:koin-test:$koin_version"
     compile "io.insert-koin:koin-ktor:$koin_version"
 
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-server-netty:$ktor_version"
-    implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.ktor:ktor-gson:$ktor_version"
 
+    compile 'com.github.h0tk3y:regex-dsl:v0.1'
+
+    implementation "ch.qos.logback:logback-classic:$logback_version"
+    implementation "ch.qos.logback.contrib:logback-json-classic:0.1.2"
+    implementation "ch.qos.logback.contrib:logback-jackson:0.1.2"
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+    testImplementation 'org.hamcrest:hamcrest:2.1'
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.mockito:mockito-inline:2.8.47'
+    testImplementation "io.insert-koin:koin-test-junit5:$koin_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
 }
 
 test {
