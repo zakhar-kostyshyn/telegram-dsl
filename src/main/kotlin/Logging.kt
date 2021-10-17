@@ -1,5 +1,6 @@
 import models.Update
 import io.ktor.application.*
+import models.DslCode
 
 object Logging {
 
@@ -10,6 +11,10 @@ object Logging {
                 .joinToString(separator = "\n")
         }
         call.application.environment.log.info("update = $prettiedUpdate")
+    }
+
+    fun logDslCode(call: ApplicationCall, dslCode: DslCode) {
+        call.application.environment.log.info("update = ${dslCode.code}")
     }
 
 }

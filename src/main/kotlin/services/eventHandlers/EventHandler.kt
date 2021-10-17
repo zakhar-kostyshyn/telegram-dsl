@@ -20,7 +20,7 @@ class MessageEventHandler(
 
     override fun handle(event: MessageEvent, update: Update) {
         val semanticModel = codeService.codeProcessing(
-            codeService.getDslCode(),
+            codeService.getDslCode()!!,
             update
         )
 
