@@ -27,4 +27,10 @@ object Routes {
             codeService.setDslCode(dslCode)
         }
     }
+
+    fun Route.test() {
+        get("/test") {
+            println("achievable")
+        }
+    }
 }

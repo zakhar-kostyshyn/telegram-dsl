@@ -81,20 +81,6 @@ internal class BasicParserTest {
         assertThat(result, `is`(empty()))
     }
 
-//    @Test
-//    fun dropHandledTokensTillTest_1() {
-//        val basicParser = BasicParser()
-//        val listOfTokens = mutableListOf(
-//            Token(Keyword.FunctionKeyword, "function"),
-//            Token(Separator.Whitespace, " "),
-//            Token(Text.AnyText, "test"),
-//            Token(Separator.OpenCurlyBrace, "{"),
-//            Token(Separator.CloseCurlyBrace, "}")
-//        )
-//        val result = basicParser.rangeToMissAfterRecursion(Token(Separator.CloseCurlyBrace, "}"), listOfTokens)
-//        assertThat(result.size, `is`(0))
-//    }
-
     @Test
     fun recursivePass_0() {
         val basicParser = BasicParser()
@@ -260,6 +246,7 @@ internal class BasicParserTest {
         val function = Node(nodeType = NodeType.Function, value = "test")
         val action = Node(nodeType = NodeType.FunctionAction)
         val method = Node(nodeType = NodeType.Method, value = "send")
+        val methodArgument = Node(nodeType = NodeType.MethodArgument)
         val reference1 = Node(nodeType = NodeType.Reference, value = "update")
         val reference2 = Node(nodeType = NodeType.Reference, value = "message")
         val reference3 = Node(nodeType = NodeType.Reference, value = "text")
@@ -267,17 +254,19 @@ internal class BasicParserTest {
         start.childrenNodes += function
         function.childrenNodes += action
         action.childrenNodes += method
-        method.childrenNodes += reference1
-        method.childrenNodes += reference2
-        method.childrenNodes += reference3
+        method.childrenNodes += methodArgument
+        methodArgument.childrenNodes += reference1
+        methodArgument.childrenNodes += reference2
+        methodArgument.childrenNodes += reference3
 
         assertThat(result, `is`(start))
         assertThat(result.childrenNodes[0], `is`(function))
         assertThat(result.childrenNodes[0].childrenNodes[0], `is`(action))
         assertThat(result.childrenNodes[0].childrenNodes[0].childrenNodes[0], `is`(method))
-        assertThat(result.childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[0], `is`(reference1))
-        assertThat(result.childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[1], `is`(reference2))
-        assertThat(result.childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[2], `is`(reference3))
+        assertThat(result.childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[0], `is`(methodArgument))
+        assertThat(result.childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[0], `is`(reference1))
+        assertThat(result.childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[1], `is`(reference2))
+        assertThat(result.childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[0].childrenNodes[2], `is`(reference3))
     }
 
     @Test

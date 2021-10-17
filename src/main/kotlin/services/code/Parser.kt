@@ -86,7 +86,7 @@ class BasicParser : Parser {
                 val referenceNode = Node(nodeType = NodeType.Reference, value = tokens[i].value).apply {
                     this.parentNode = parentNode
                 }
-                parentNode.childrenNodes += recursiveParse(mutableListOf(), referenceNode)
+                parentNode.childrenNodes += referenceNode
                 i++
                 continue
             }
@@ -121,16 +121,14 @@ class BasicParser : Parser {
             ) {
                 println("\tHandle Method")
                 val methodName = tokens[i].value
-                val methodNode =
-                    Node(nodeType = NodeType.Method, value = methodName).apply { this.parentNode = parentNode }
+                val methodNode = Node(nodeType = NodeType.Method, value = methodName).apply { this.parentNode = parentNode }
                 parentNode.childrenNodes += methodNode
                 val openBracket = i + 1
                 excludedTokenSubList(openBracket, Token(Separator.CloseBracket, ")"), tokens)
                     .divide { it.type == Separator.Coma }
                     .forEach {
                         val methodArgument = Node(NodeType.MethodArgument).apply { this.parentNode = methodNode }
-                        methodArgument.childrenNodes += recursiveParse(it, methodArgument)
-                        methodNode.childrenNodes += methodArgument
+                        methodNode.childrenNodes += recursiveParse(it, methodArgument)
                     }
                 i += tokens.indexOf(Token(Separator.CloseBracket, ")"))
                 continue
@@ -170,7 +168,10 @@ class BasicParser : Parser {
 
     fun buildSemanticModel(tree: Node, update: Update): SemanticModel {
 
+        println("BUILD SEMANTIC MODEL")
+
         val semanticFunctions: List<SemanticFunction> = tree.childrenNodes.map { functionNode ->
+            println("Working on function node with name `${functionNode.value}`")
             SemanticFunction(
                 name = SemanticFunctionName(functionNode.value!!),
                 semanticFunctionProperties = if (functionNode.childrenNodes.isEmpty()) emptyList() else listOf(

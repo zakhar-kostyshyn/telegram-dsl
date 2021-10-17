@@ -21,19 +21,15 @@ internal class MessageEventHandlerTest {
 
         """
 
-    private val semanticModel = SemanticModel(listOf(
-            SemanticFunction(SemanticFunctionName("test"), listOf(
-                    SemanticFunctionTrigger(Message::class, SemanticFunctionTriggerModelCondition(SemanticFunctionTriggerModelCondition.ConditionType.Any)),
-                    SemanticFunctionAction(listOf(SemanticMethod(SendMessageMethod::class, listOf(SemanticMethodArgument("test-message")))))
-                )
-            )
-        )
-    )
-
     @Test
     fun handleTest() {
 
         // setup
+        val semanticModel = SemanticModel(semanticFunctions = listOf(
+            SemanticFunction(name = SemanticFunctionName("test"), semanticFunctionProperties = listOf(
+                SemanticFunctionTrigger(triggerModel = Message::class, modelCondition = SemanticFunctionTriggerModelCondition(SemanticFunctionTriggerModelCondition.ConditionType.Any)),
+                SemanticFunctionAction(methods = listOf(SemanticMethod(method = SendMessageMethod::class, arguments = listOf(SemanticMethodArgument(argument = "test-message")))))
+        ))))
         val codeService = mock<CodeService>()
         val sendServiceImpl = mock<SendServiceImpl>()
         val messageEventHandler = MessageEventHandler(codeService, sendServiceImpl)
