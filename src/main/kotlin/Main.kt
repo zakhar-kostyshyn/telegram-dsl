@@ -1,3 +1,6 @@
+import Routes.clientRoutes
+import Routes.telegramBotRoutes
+import Routes.test
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
@@ -6,31 +9,29 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import models.MethodWrapper
 import models.TelegramMethod
-import org.koin.java.KoinJavaComponent
-import Routes.clientRoutes
-import Routes.telegramBotRoutes
 import services.code.BasicLexer
 import services.code.BasicParser
 import services.code.CodeService
 import services.eventHandlers.CommandEventHandler
 import services.eventHandlers.MessageEventHandler
 import services.methods.MethodType
-import services.methods.SendService
 import services.methods.SendServiceImpl
 import services.resolvers.ResolverServiceImpl
 
-val sendService by KoinJavaComponent.inject<SendService>(SendService::class.java)
-
 fun main() {
 
-    // ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha (welcome to the club body)
+    // ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha (welcome to the club buddy)
+    val codeService = CodeService(
+        lexer = BasicLexer(),
+        parser = BasicParser()
+    )
+
+    val sendServiceImpl = SendServiceImpl()
+
     val resolver = ResolverServiceImpl(
         messageEventHandler = MessageEventHandler(
-            codeService = CodeService(
-                lexer = BasicLexer(),
-                parser = BasicParser()
-            ),
-            sendServiceImpl =  SendServiceImpl()
+            codeService = codeService,
+            sendServiceImpl = sendServiceImpl
         ),
         commandEventHandler = CommandEventHandler()
     )
@@ -40,19 +41,22 @@ fun main() {
             gson()
         }
         routing {
-            clientRoutes()
+            clientRoutes(codeService)
             telegramBotRoutes(resolver)
+            test()
         }
     }.start()
 
-    sendService.sendMessage(
+    val response = sendServiceImpl.sendMessage(
         MethodWrapper(
             methodType = MethodType.SetWebhook,
             telegramMethodModel = TelegramMethod.SetWebhookMethod(
-                url = "https://1317-62-122-200-234.ngrok.io"
+                url = "https://a53f-93-175-200-24.ngrok.io"
             )
         )
     )
+
+    println(response)
 
 }
 

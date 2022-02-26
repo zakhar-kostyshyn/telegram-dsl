@@ -15,7 +15,7 @@ interface SendService {
 
 class SendServiceImpl : SendService {
 
-    private val token = "2005666774:AAFOjEOGg_7Q3RGpDHwHPNGrkh25soxz8C8"
+    private val token = "2086238171:AAGOSqJCtq28xL4Fi7ffH1cVZY3UYew2GKY"
     private val client: HttpClient = client()
 
     override fun sendMessage(methodWrapper: MethodWrapper<out TelegramMethod>) = runBlocking {
